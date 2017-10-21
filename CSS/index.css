@@ -1,0 +1,72 @@
+*{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body{
+	background: url(../img/town_2.jpg) no-repeat;
+	background-size: 100%;
+}
+
+#role{
+	position: absolute;
+	width: 100px;
+	height: 150px;
+	background: url(../img/00.png) no-repeat;
+	/*background-size: 100%;*/
+	top: 500px;
+	left: 600px;
+}
+
+.npc_1{
+	width: 80px;
+	margin-top: 375px;
+	margin-left: 600px;
+}
+
+.halo{
+	width: 120px;
+}
+
+.halo_left{
+	float: left;
+	margin-left: 120px;
+	margin-top: 500px;
+}
+
+.halo_right{
+	float: right;
+	margin-top: 0px;
+	margin-left: 380px;
+}
+
+.arrow{
+	display: block;
+	width: 40px;
+	margin: 0 auto;
+}
+
+.arrowWrapper_left{
+	position: absolute;
+	top: 300px;
+	left: 160px;
+	color: white;
+}
+
+.arrowWrapper_right{
+	position: absolute;
+	top: 300px;
+	left: 1210px;
+	color: white;
+}
+
+.arrow_left{
+	/*top: 300px;
+	left: 160px;*/
+}
+
+.arrow_right{
+	/*top: 300px;
+	left: 1220px;*/
+}
