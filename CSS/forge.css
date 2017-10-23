@@ -6,7 +6,7 @@
 
 #mainWrapper{
 	position: relative;
-	background: url(../img/market.jpg) no-repeat;
+	background: url(../img/forgingRoom.jpeg) no-repeat;
 	background-size: 100%;
 	max-width: 1300px;
 	max-height: 800px;
@@ -15,42 +15,33 @@
 	margin: 0 auto;
 }
 
-.npcWrapper{
-	position: absolute;
-	width: 150px;
-	top: 280px;
-	left: 810px;
-	color: white;
-	-ms-text-align-last: center;
-	text-align-last: center;
-	cursor: pointer;
-}
-
-img.businessman{
-	width: 150px;
-}
-
-img.enter{
-	position: absolute;
-	width: 120px;
-	top: 600px;
-	left: 250px;
-}
-
-
 #role{
 	position: absolute;
 	width: 100px;
 	height: 150px;
 	background: url(../img/00.png) no-repeat;
-	top: 550px;
-	left: 550px;
+	top: 250px;
+	left: 450px;
+}
+
+img.blacksmith{
+	position: absolute;
+	width: 150px;
+	top: 130px;
+	left: 830px;
+}
+
+img.enter{
+	position: absolute;
+	width: 120px;
+	top: 200px;
+	left: 300px;
 }
 
 .arrowWrapper{
 	position: absolute;
-	top: 370px;
-	left: 280px;
+	top: 5px;
+	left: 320px;
 	color: white;
 }
 

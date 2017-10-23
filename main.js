@@ -1,4 +1,7 @@
-const { app, BrowserWindow } = require('electron');
+const {
+    app,
+    BrowserWindow
+} = require('electron');
 const path = require('path');
 const url = require('url');
 
@@ -6,17 +9,24 @@ let win;
 
 function createWindow() {
     // 创建浏览器窗口。
-    win = new BrowserWindow({ width: 1200, height: 800 });
+    win = new BrowserWindow({
+        width: 1300,
+        height: 800,
+        maxWidth: 1300,
+        maxHeight: 800,
+        minWidth: 1300,
+        minHeight: 800
+    });
 
     // 加载应用的 index.html。
     win.loadURL(url.format({
-        pathname: path.join(__dirname, 'HTML/index.html'),
+        pathname: path.join(__dirname, './index.html'),
         protocol: 'file:',
         slashes: true
     }))
 
     // 打开开发者工具。
-    win.webContents.openDevTools();
+    //win.webContents.openDevTools();
 
     // 当 window 被关闭，这个事件会被触发。
     win.on('closed', () => {
