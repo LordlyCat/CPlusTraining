@@ -11,16 +11,16 @@ function enterSomewhere(event) {
     if (e.keyCode === 13) {
         if (parseInt(getComputedStyle(role).left) >= 1110 &&
             parseInt(getComputedStyle(role).left) <= 1170 &&
-            parseInt(getComputedStyle(role).top) >= 360 &&
-            parseInt(getComputedStyle(role).top) <= 395) {
+            parseInt(getComputedStyle(role).top) >= 326 &&
+            parseInt(getComputedStyle(role).top) <= 370) {
 
-            window.location.href = '../HTML/market.html';
+            window.location.href = 'http://127.0.0.1:4999/HTML/market.html' + '?username=' + username;
 
         } else if (parseInt(getComputedStyle(role).left) <= 160 &&
-            parseInt(getComputedStyle(role).top) >= 404 &&
-            parseInt(getComputedStyle(role).top) <= 436) {
+            parseInt(getComputedStyle(role).top) >= 368 &&
+            parseInt(getComputedStyle(role).top) <= 408) {
 
-            window.location.href = '../HTML/forge.html';
+            window.location.href = 'http://127.0.0.1:4999/HTML/forge.html' + '?username=' + username;
         }
 
     }
@@ -32,45 +32,51 @@ function boundaryJudgment(event) {
     var e = event || window.event;
 
     // console.log(parseInt(getComputedStyle(role).left));
-    // console.log(parseInt(getComputedStyle(role).top));
+    //console.log(parseInt(getComputedStyle(role).top));
     if (parseInt(role.style.left) >= 1190) {
         role.style.left = '1190px';
     }
     if (parseInt(role.style.left) <= 110) {
         role.style.left = '110px';
     }
-    if (parseInt(role.style.top) <= 350) {
-        role.style.top = '350px';
+    if (parseInt(role.style.top) <= 330) {
+        role.style.top = '330px';
     }
     if (parseInt(role.style.top) <= 520 && parseInt(role.style.top) >= 515 &&
-        parseInt(role.style.left) >= 1150) {
+        parseInt(role.style.left) >= 1140) {
         role.style.top = '520px';
     }
     if (parseInt(role.style.top) >= 620) {
         role.style.top = '620px';
     }
-    if (parseInt(role.style.left) >= 1150 &&
-        parseInt(role.style.top) >= 410 &&
-        parseInt(role.style.top) <= 417) {
+    if (parseInt(role.style.left) >= 1140 &&
+        parseInt(role.style.top) >= 388 &&
+        parseInt(role.style.top) <= 407) {
         if (e.keyCode === 83) {
-            role.style.top = '410px';
+            role.style.top = '390px';
         }
     }
-    if (parseInt(role.style.left) >= 1150 &&
+    if (parseInt(role.style.left) >= 1140 &&
         parseInt(role.style.top) >= 410 &&
         parseInt(role.style.top) <= 520) {
 
         if (e.keyCode === 68) {
-            role.style.left = '1150px';
+            role.style.left = '1140px';
         }
     }
 }
+
+//角色信息
+var username = window.location.search.substring(10);
+var usernameBox = document.querySelector('.username');
+usernameBox.innerHTML = username;
 
 //NPC剧情对话
 var npc = document.querySelector('.npc_1');
 var dialog = document.querySelector('.dialog');
 var dialogContent = dialog.querySelector('.content');
-var dialogOrder = 1;
+var dialogOrder = 0;
+var startFlag = false;
 
 // localStorage.setItem('flag', true);
 // if (localStorage.getItems('flag')) {
@@ -82,6 +88,29 @@ function startDialogue() {
         parseInt(role.style.left) >= 750 &&
         parseInt(role.style.top) <= 960) {
         dialog.style.display = 'block';
+        flag = true;
+
+        ajax({
+            url: '/',
+            method: 'POST',
+            data: {
+                method: 'progress',
+                username: username
+            },
+            success: function (data) {
+                console.log(data);
+                if (data == 0) {
+                    continueDialogue();
+                }else if (data == 1) {
+                    dialogOrder = 8;
+                    localStorage.setItem('dialogOrder', dialogOrder);
+                    continueDialogue();
+                }
+            },
+            error: function (data) {
+                console.log(data);
+            }
+        })
     }
 }
 
@@ -90,12 +119,15 @@ function continueDialogue(event) {
     var e = event || window.event;
 
     if (dialog.style.display === 'block' && e.keyCode === 32 &&
-        dialogOrder <= 8) {
+        dialogOrder <= 8 || startFlag) {
 
-        var content = '';
+        var content;
         //dialogOrder = localStorage.getItems('dialogOrder');
-
+        console.log(dialogOrder);
         switch (dialogOrder) {
+            case 0:
+                content = '嗨！你是新来的吧，小伙子';
+                break;
             case 1:
                 content = '是的，请问这是什么地方？';
                 break;
@@ -122,34 +154,98 @@ function continueDialogue(event) {
                 content = '嗯，不错，这么快就完成任务了！快领取你的任务奖励吧～';
                 break;
             default:
+                dialog.style.display = 'none';
                 content = 'hahaha';
                 break;
         }
 
         dialogOrder += 1;
-        localStorage.setItem('dialogOrder', dialogOrder);
+        if (dialogOrder === 8 || dialogOrder === 9) {
+            dialog.style.display = 'none';
+        }
+        
+        //localStorage.setItem('dialogOrder', dialogOrder);
         dialogContent.innerHTML = content;
+        startFlag = false;
+        console.log(content);
     }
 }
 
+//聊天
+var ws = new WebSocket('ws:localhost:5000');
+var talk = document.querySelector('.talk');
+var showMessage = document.querySelector('.showMessage');
+var messageInput = document.querySelector('#input');
+var sendBtn = document.querySelector('.send');
+var closeBtn = document.querySelector('.close');
+var openBtn = document.querySelector('.open');
+
+
+ws.onopen = function () {
+    console.log('Connection to server opened');
+}
+
+function sendMessage () {
+    var data = {}
+    var message = messageInput.value;
+    data.username = username;
+    data.message = message;
+    data = JSON.stringify(data);
+    if (message.replace(/(^\s*)|(\s*$)/g, '').length === 0) {
+        alert('发送内容不能为空！')
+    }else {
+        ws.send(data);
+        messageInput.value = '';
+    }
+    
+}
+
+function enterSend (event) {
+    var event = event || window.event;
+    if (event.keyCode === 13 && closeBtn.style.display === 'block') {
+        sendMessage();
+    }
+}
+
+
+ws.onmessage = function (message) {
+    data = JSON.parse(message.data)
+    console.log(data.message);
+    var li = document.createElement('li');
+    var user = document.createElement('span');
+    var messageBox = document.createElement('p');
+
+    user.className = 'user';
+    messageBox.className = 'message';
+    user.innerHTML = data.username + " :";
+    messageBox.innerHTML = data.message;
+
+    showMessage.appendChild(li);
+    li.appendChild(user);
+    li.appendChild(messageBox);
+
+    showMessage.scrollTop = showMessage.scrollHeight;
+}
+
+function openTalk () {
+    openBtn.style.display = 'none';
+    closeBtn.style.display = 'block';
+    talk.className = 'onTalk';
+}
+
+function closeTalk () {
+    openBtn.style.display = 'block';
+    closeBtn.style.display = 'none';
+    talk.className = 'talk';
+    showMessage.innerHTML = '';
+}
+
+
+sendBtn.addEventListener('click', sendMessage, false);
+document.addEventListener('keypress', enterSend, false);
+openBtn.addEventListener('click', openTalk, false);
+closeBtn.addEventListener('click', closeTalk, false);
 document.addEventListener('click', startDialogue, false);
 document.addEventListener('keypress', continueDialogue, false);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 //The end

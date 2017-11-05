@@ -2,8 +2,9 @@ var express = require('express'),
     path = require('path'),
     bodyParser = require('body-parser'),
     crypto = require('crypto'),
-    md5 = crypto.createHash('md5');
+    md5 = crypto.createHash('md5'),
     app = express(),
+    websocketServer = require('ws').Server,
     mysql = require('mysql'),
     connection = mysql.createConnection({
         host: 'localhost',
@@ -31,20 +32,25 @@ app.post('/', function(req, res, nest) {
     if (data.method === 'register') {
         var date = new Date(),
             registerTime = date.toUTCString();
-            
+
         //判断用户名是否存在
-        connection.query("SELECT username FROM user WHERE username=" +"\"" +data.username + "\"", function(err, result) {
+        connection.query("SELECT username FROM user WHERE username=" + "\"" + data.username + "\"", function(err, result) {
             if (result.length !== 0) {
                 res.send('failed');
             } else {
                 //将用户信息插入数据库
 
-                connection.query("INSERT INTO user SET username=?, password=?, progress=?, registerTime=?",
-                 [data.username, data.password, 0, registerTime], function(err, result) {
+                connection.query("INSERT INTO user SET username=?, password=?, registerTime=?", [data.username, data.password, registerTime], function(err, result) {
                     if (err) {
                         console.log(err);
                     } else {
-                        res.sendStatus(200);
+                        connection.query("INSERT INTO gameData SET username=?, progress=?, money=?, level=?, experience=?", [data.username, 0, 0, 1, 0], function(err, result) {
+                            if (err) {
+                                console.log(err);
+                            } else {
+                                res.sendStatus(200);
+                            }
+                        });
                     }
                 });
             }
@@ -54,7 +60,7 @@ app.post('/', function(req, res, nest) {
 
     //登录
     else if (data.method === 'login') {
-        connection.query('SELECT password FROM user WHERE username=' + data.username, function(err, result) {
+        connection.query("SELECT password FROM user WHERE username=" + data.username, function(err, result) {
             if (err) {
                 console.log(err);
             } else if (result.length === 0) {
@@ -67,10 +73,59 @@ app.post('/', function(req, res, nest) {
                 }
             }
         });
+    } else if (data.method === 'money') {
+        console.log(data);
+        connection.query("SELECT money FROM gameData WHERE username=" + data.username, function(err, result) {
+            var money = parseInt(JSON.parse(JSON.stringify(result))[0].money);
+            money += parseInt(data.number);
+            if (money < 0) {
+                res.send('notEnough');
+            } else {
+                connection.query("UPDATE gameData SET money=" + money + " WHERE username=" + data.username, function(err, result) {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        res.sendStatus(200);
+                    }
+                });
+            }
+        });
+    } else if (data.method === 'progress') {
+        connection.query("SELECT progress FROM gameData WHERE username=" + data.username, function(err, result) {
+            var progress = parseInt(JSON.parse(JSON.stringify(result))[0].progress);
+            res.send(progress.toString());
+        });
     }
-
 });
 
+//聊天
+var ws = new websocketServer({
+    port: 5000
+});
+
+var clients = [];//连接池
+
+ws.on('connection', function (ws) {
+    clients.push(ws);
+    console.log('A user has connected');
+
+    
+
+    ws.on('message', function(message) {
+        // 广播消息
+        clients.forEach(function(ws){
+            ws.send(message);
+        });
+    });
+
+    ws.on('close', function(message) {
+        // 连接关闭时，将其移出连接池
+        clients = clients.filter(function(ws1){
+            return ws1 !== ws;
+        })
+    });
+
+})
 
 
 //设置监听端口

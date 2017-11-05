@@ -6,11 +6,13 @@
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="../CSS/index.css">
     <script src="../JS/roleMoving.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../JS/Ajax.js" type="text/javascript" charset="utf-8"></script>
 </head>
 
 <body>
     <div id="mainWrapper">
         <div id="role">
+            <p class="username"></p>
         </div>
         <img class="npc_1" src="../img/npc_1.png" alt="">
         <img class="halo halo_left" src="../img/halo.png" alt="">
@@ -25,8 +27,37 @@
         </div>
         <div class="dialog">
             <span class="speaker">NPC :</span>
-            <p class="content">嗨！你是新来的吧，小伙子</p>
+            <p class="content"></p>
             <p class="cue">按space键继续</p>
+        </div>
+        <div class="bar">
+        
+            <div class="money">
+                <img src="../img/money.png" alt="">
+                <span>金币：</span>
+                <span id="balance">0</span>
+            </div>
+            <div class="envelope">
+                <img src="../img/envelope.png" alt="">
+                <span>消息</span>
+            </div>
+            <div class="backpack">
+                <img src="../img/pack.png" alt="">
+                <span>背包</span>
+            </div>
+        </div>
+        <div class="talk">
+            <div class="showMessage">
+
+            </div>
+            <input type="text" name="" value="" placeholder="" id="input">
+            <div class="send">
+                Send
+            </div>
+            <div class="close"></div>
+            <div class="open">
+                打开公聊
+            </div>
         </div>
     </div>
     <script src="../JS/index.js" type="text/javascript" charset="utf-8" async defer></script>

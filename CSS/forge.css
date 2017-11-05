@@ -1,52 +1,76 @@
-*{
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-#mainWrapper{
-	position: relative;
-	background: url(../img/forgingRoom.jpeg) no-repeat;
-	background-size: 100%;
-	max-width: 1300px;
-	max-height: 800px;
-	min-width: 1300px;
-	min-height:  778px;
-	margin: 0 auto;
+#mainWrapper {
+    position: relative;
+    background: url(../img/forgingRoom.jpeg) no-repeat;
+    background-size: 100%;
+    max-width: 1300px;
+    max-height: 800px;
+    min-width: 1300px;
+    min-height: 778px;
+    margin: 0 auto;
 }
 
-#role{
-	position: absolute;
-	width: 100px;
-	height: 150px;
-	background: url(../img/00.png) no-repeat;
-	top: 250px;
-	left: 450px;
+#role {
+    position: absolute;
+    width: 110px;
+    height: 150px;
+    background: url(../img/00.png) no-repeat;
+    background-position: 20px 27px;
+    top: 250px;
+    left: 450px;
 }
 
-img.blacksmith{
-	position: absolute;
-	width: 150px;
-	top: 130px;
-	left: 830px;
+.username {
+    width: 100%;
+    height: 20px;
+    color: white;
+    text-align: center;
+    font-weight: lighter;
+    font-size: 17px;
 }
 
-img.enter{
-	position: absolute;
-	width: 120px;
-	top: 200px;
-	left: 300px;
+img.blacksmith {
+    position: absolute;
+    width: 150px;
+    top: 130px;
+    left: 830px;
+    cursor: pointer;
 }
 
-.arrowWrapper{
-	position: absolute;
-	top: 5px;
-	left: 320px;
-	color: white;
+img.enter {
+    position: absolute;
+    width: 120px;
+    top: 200px;
+    left: 300px;
 }
 
-.arrow{
-	display: block;
-	width: 40px;
-	margin: 0 auto;
+.arrowWrapper {
+    position: absolute;
+    top: 5px;
+    left: 320px;
+    color: white;
 }
+
+.arrow {
+    display: block;
+    width: 40px;
+    margin: 0 auto;
+}
+
+.forge{
+    position: absolute;
+    width: 70%;
+    height: 500px;
+    background: #002b36;
+    top: 100px;
+    left: 15%;
+    opacity: 0.66;
+}
+
+
+
