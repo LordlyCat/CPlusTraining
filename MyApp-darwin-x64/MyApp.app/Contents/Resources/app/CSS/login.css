@@ -1,0 +1,152 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+@font-face {
+    font-family: 'HKHB';
+    src: url('../font/HKHB/hkhb.ttf');
+    font-style: normal;
+    font-weight: normal;
+}
+
+#mainWrapper {
+    position: relative;
+    overflow: hidden;
+    background: url(../img/login_1.jpg) no-repeat;
+    background-size: 100% 100%;
+    max-width: 1300px;
+    max-height: 800px;
+    min-width: 1300px;
+    min-height: 778px;
+    margin: 0 auto;
+}
+
+.wrapper {
+    width: 600px;
+    margin: 0 auto;
+    margin-top: 250px;
+}
+
+.topBtn {
+    width: 215px;
+    margin: 0 auto;
+}
+
+
+
+.registerInput,
+.loginInput {
+    width: 240px;
+    margin: 0 auto;
+}
+
+.registerInput {
+    display: none;
+}
+
+.inputWrapper {
+    overflow: hidden;
+    background: url(../img/input.png) no-repeat;
+    background-size: 100% 100%;
+    margin-top: 10px;
+}
+
+input {
+    width: 240px;
+    height: 60px;
+    outline: none;
+    padding: 20px;
+    color: white;
+    border: none;
+    background: url(../img/input.png) no-repeat;
+    background-size: 150% 150%;
+    background-position: 10%;
+    -ms-text-align-last: center;
+    font-size: 23px;
+    font-weight: 200;
+    text-align-last: center;
+}
+
+input::-webkit-input-placeholder {
+    color: white;
+    opacity: 0.49;
+}
+
+.register,
+.login{
+	margin-top: 20px;
+	width: 240px;
+	height: 60px;
+	background: url(../img/input.png) no-repeat;
+	background-size: 100%;
+	cursor: pointer;
+	font-size: 24px;
+	color: white;
+	-ms-text-align-last: center;
+	text-align-last: center;
+	line-height: 60px;
+	opacity: 0.5;
+}
+.register:hover,
+.login:hover{
+	opacity: 0.95;
+}
+
+.go{
+	font-size: 12px;
+	color: white;
+	text-decoration: underline;
+	text-align: right;
+	cursor: pointer;
+	opacity: 0.5;
+}
+
+.go:hover{
+	opacity: 0.8;
+}
+
+.welcome{
+	display: none;
+	position: absolute;
+	width: 400px;
+	height: 300px;
+	background: url(../img/welcome.png) no-repeat;
+	background-size: 100% 80%;
+	top: 250px;
+	left: 450px;
+	font-family: HKHB;
+	color: orange;
+	opacity: 0;
+}
+
+.showWelcome{
+	display: block;
+	position: absolute;
+	width: 400px;
+	height: 300px;
+	background: url(../img/welcome.png) no-repeat;
+	background-size: 100% 80%;
+	top: 250px;
+	left: 450px;
+	font-family: HKHB;
+	color: orange;
+	opacity: 1;
+}
+
+.welcomeWords{
+	width: 100%;
+	height: 80px;
+	padding-top: 80px;
+	font-size: 29px;
+	-ms-text-align-last: center;
+	text-align-last: center;
+}
+.count{
+	height: 50px;
+	padding-top: 85px;
+	font-size: 22px;
+	text-align: center;
+}
+

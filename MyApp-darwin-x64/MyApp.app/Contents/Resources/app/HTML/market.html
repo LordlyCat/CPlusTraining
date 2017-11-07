@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>RPGgame</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="../CSS/market.css">
+    <script src="../JS/roleMoving.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../JS/Ajax.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body>
+	<div id="mainWrapper">
+		<div class="npcWrapper">
+			<p>商人</p>
+			<img class="businessman" src="../img/businessman.png" alt="">
+		</div>
+
+		<img class="enter" src="../img/halo.png" alt="">
+
+		<div id="role">
+			<p class="username"></p>
+		</div>
+
+		<div class="arrowWrapper">
+            <img class="arrow" src="../img/arrow.png" alt="">
+            <p>返回城镇</p>
+        </div>
+        <div class="storeWrapper">
+        	<div class="top">商店</div>
+        	<div class="goodsWrapper">
+        		<div class="good">
+        			<div class="tradeName">
+        				锻造石
+        			</div>
+        			<div class="price">200金币</div>
+        			<span class="num">购买数量: </span>
+        			<input class="number" type="text" name="number" value="" placeholder="0">
+        			<div class="buy">确认购买</div>
+        		</div>
+        		<div class="good">
+        			<div class="tradeName">
+        				止痛药
+        			</div>
+        			<div class="price">100金币</div>
+        			<span class="num">购买数量: </span>
+        			<input class="number" type="text" name="number" value="" placeholder="0">
+        			<div class="buy">确认购买</div>
+        		</div>
+        		<div class="good">
+        			<div class="tradeName">
+        				六味地黄丸
+        			</div>
+        			<div class="price">1500金币</div>
+        			<span class="num">购买数量: </span>
+        			<input class="number" type="text" name="number" value="" placeholder="0">
+        			<div class="buy">确认购买</div>
+        		</div>
+        	</div>
+
+            <div class="back">退出商城</div>
+        </div>
+	</div>
+    <script src="../JS/market.js" type="text/javascript" charset="utf-8" async defer></script>
+</body>
+
+</html>
